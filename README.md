@@ -7,3 +7,5 @@
 * Change doc
 
 * Feat 1
+
+* git-flow stable 1

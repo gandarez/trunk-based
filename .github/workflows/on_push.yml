@@ -4,14 +4,14 @@ on:
   pull_request:
     types: [opened, reopened, ready_for_review, synchronize]
   push:
-    branches: [master]
+    branches: [master, develop]
     tags-ignore: ["**"]
 
 jobs:
   version:
     name: Version
     concurrency: tagging
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop' }}
     runs-on: ubuntu-latest
     outputs:
       semver_tag: ${{ steps.semver-tag.outputs.semver_tag }}
@@ -28,7 +28,7 @@ jobs:
         id: semver-tag
         uses: gandarez/semver-action@master
         with:
-          branching_model: trunk-based
+          branching_model: git-flow
           prefix: v
           debug: true
       - name: Create tag
